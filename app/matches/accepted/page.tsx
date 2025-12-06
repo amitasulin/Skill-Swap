@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useStore } from '@/lib/store'
@@ -9,8 +10,13 @@ export default function AcceptedMatchesPage() {
   const router = useRouter()
   const { currentUser, matches, users } = useStore()
 
+  useEffect(() => {
+    if (!currentUser) {
+      router.push('/auth')
+    }
+  }, [currentUser, router])
+
   if (!currentUser) {
-    router.push('/auth')
     return null
   }
 

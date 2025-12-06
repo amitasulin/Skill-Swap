@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { useStore } from '@/lib/store'
 import { Calendar, Clock, Video, MapPin } from 'lucide-react'
@@ -23,8 +23,13 @@ export default function SchedulePage() {
       )
     : null
 
+  useEffect(() => {
+    if (!currentUser || !match || !matchedUser) {
+      router.push('/matches/accepted')
+    }
+  }, [currentUser, match, matchedUser, router])
+
   if (!currentUser || !match || !matchedUser) {
-    router.push('/matches/accepted')
     return null
   }
 

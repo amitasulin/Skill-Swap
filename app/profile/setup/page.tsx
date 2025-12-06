@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/lib/store'
 import type { Skill, ExperienceLevel, LessonType } from '@/types'
@@ -31,8 +31,13 @@ export default function ProfileSetupPage() {
     availability: [] as string[],
   })
 
+  useEffect(() => {
+    if (!currentUser) {
+      router.push('/auth')
+    }
+  }, [currentUser, router])
+
   if (!currentUser) {
-    router.push('/auth')
     return null
   }
 
